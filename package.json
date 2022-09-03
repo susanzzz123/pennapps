@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
+    "bootstrap": "^5.2.0",
     "concurrently": "^7.3.0",
     "cookie-parser": "^1.4.6",
     "cookie-session": "^2.0.0",
@@ -21,6 +22,7 @@
     "node": "^16.17.0",
     "parcel": "^2.7.0",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
