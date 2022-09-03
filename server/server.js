@@ -6,6 +6,10 @@ const app = express()
 app.use(express.json())
 app.use(express.static('dist'))
 
+app.use((err, req, res, next) => {
+  res.status(500).send(`Something broke! Reason: ${err.message}`)
+})
+
 // set favicon
 app.get('/favicon.ico', (req, res) => {
   res.status(404).send()
