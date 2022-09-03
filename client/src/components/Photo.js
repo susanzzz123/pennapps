@@ -1,6 +1,6 @@
-const React = require('react')
+import { SearchResult } from './SearchResult';
 import { Container, Dropdown, Button } from 'react-bootstrap'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 const Photo = () => {
@@ -47,8 +47,8 @@ const Photo = () => {
       </h3>
       <Container className='d-flex justify-content-center'>
         <ButtonGroup aria-label="Basic example">
-            <Button variant="success" onClick={() => setMode('url')}>Upload URL</Button>
-            <Button variant="success" onClick={() => setMode('local')}>Upload Local Image</Button>
+            <Button type='radio' variant="success" onClick={() => setMode('url')}>Upload URL</Button>
+            <Button type='radio' variant="success" onClick={() => setMode('local')}>Upload Local Image</Button>
         </ButtonGroup>
       </Container>
       {
@@ -75,7 +75,7 @@ const Photo = () => {
           </Dropdown>
       </Container>
       <Container className="d-flex justify-content-center">
-        <img id="the-picture" width="30%" />
+        <img id="the-picture" width="30%"/>
       </Container>
             </>
         )
@@ -89,7 +89,11 @@ const Photo = () => {
           className="w-fit border border-5 place-self-center mx-auto photo-url"
           type="url"
           placeholder='Image URL:'
-          onChange={e => setURL(e.target.value)}></input>
+          onChange={e => setURL(e.target.value)}
+          value={url}></input>
+        <Button variant='secondary' size='sm' onClick={() => setURL('')}>
+            clear
+        </Button>
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
                 {organ}
@@ -104,13 +108,13 @@ const Photo = () => {
           </Dropdown>
       </Container>
       <Container className="d-flex justify-content-center">
-        <img src={url} width="30%" />
+        <img src={url} width="30%"/>
       </Container>
             </>
         )
       }
       <Container className="d-flex justify-content-center">
-        <Button variant='success'>Identify</Button>
+        <Button variant='success' disabled={organ === 'Select Plant Organ'} style={organ === 'Select Plant Organ' ? {cursor: 'not-allowed'} : {}}>Identify</Button>
       </Container>
     </>
   )
