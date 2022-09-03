@@ -7,6 +7,7 @@ const Photo = () => {
   const [mode, setMode] = useState('url')
   const [url, setURL] = useState('')
   const [organ, setOrgan] = useState('Select Plant Organ')
+  const [identify, setIdentify] = useState(false)
 
   useEffect(() => {
     const uploadPictureButton = document.querySelector(".photo-upload")
@@ -66,11 +67,11 @@ const Photo = () => {
                 {organ}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1" onClick={() => setOrgan('leaf')}>leaf</Dropdown.Item>
-                <Dropdown.Item href="#/action-2" onClick={() => setOrgan('flower')}>flower</Dropdown.Item>
-                <Dropdown.Item href="#/action-3" onClick={() => setOrgan('fruit')}>fruit</Dropdown.Item>
-                <Dropdown.Item href="#/action-4" onClick={() => setOrgan('bark')}>bark</Dropdown.Item>
-                <Dropdown.Item href="#/action-5" onClick={() => setOrgan('auto')}>auto</Dropdown.Item>
+                <Dropdown.Item href="#/action-1" onClick={() => setOrgan('leaf')}>Leaf</Dropdown.Item>
+                <Dropdown.Item href="#/action-2" onClick={() => setOrgan('flower')}>Flower</Dropdown.Item>
+                <Dropdown.Item href="#/action-3" onClick={() => setOrgan('fruit')}>Fruit</Dropdown.Item>
+                <Dropdown.Item href="#/action-4" onClick={() => setOrgan('bark')}>Bark</Dropdown.Item>
+                <Dropdown.Item href="#/action-5" onClick={() => setOrgan('auto')}>Auto</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
       </Container>
@@ -82,18 +83,20 @@ const Photo = () => {
       }
       {
         mode === 'url' && (
-            <> 
-      <Container className="d-flex ">
-        <input
-          id="myImage"
-          className="w-fit border border-5 place-self-center mx-auto photo-url"
-          type="url"
-          placeholder='Image URL:'
-          onChange={e => setURL(e.target.value)}
-          value={url}></input>
-        <Button variant='secondary' size='sm' onClick={() => setURL('')}>
-            clear
-        </Button>
+        <> 
+      <Container className="d-flex justify-content-center mt-3">
+        <div className='mr-5'>
+            <input
+            id="myImage"
+            className="w-fit border border-5 mx-auto photo-url"
+            type="url"
+            placeholder='Image URL:'
+            onChange={e => setURL(e.target.value)}
+            value={url}></input>
+            <Button variant='secondary' size='sm' onClick={() => setURL('')}>
+                clear
+            </Button>
+        </div>
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
                 {organ}
@@ -114,8 +117,18 @@ const Photo = () => {
         )
       }
       <Container className="d-flex justify-content-center">
-        <Button variant='success' disabled={organ === 'Select Plant Organ'} style={organ === 'Select Plant Organ' ? {cursor: 'not-allowed'} : {}}>Identify</Button>
+        <Button variant='success' 
+        disabled={organ === 'Select Plant Organ'} 
+        style={organ === 'Select Plant Organ' ? {cursor: 'not-allowed'} : {}}
+        onClick={() => setIdentify(true)}>
+            Identify
+        </Button>
       </Container>
+      {
+        identify && (
+            <SearchResult image={url} organ={organ}></SearchResult>
+        )
+      }
     </>
   )
 }
