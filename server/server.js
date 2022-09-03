@@ -1,4 +1,5 @@
 const express = require('express')
+const api_key = '2b108jwkqQofJmQ1nbXABTe'
 
 const app = express()
 
