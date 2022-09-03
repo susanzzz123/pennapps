@@ -1,10 +1,13 @@
 const express = require('express')
-const api_key = '2b108jwkqQofJmQ1nbXABTe'
-
 const app = express()
+
 
 app.use(express.json())
 app.use(express.static('dist'))
+
+const upload = require('./router/upload')
+
+app.use('/upload', upload)
 
 app.use((err, req, res, next) => {
   res.status(500).send(`Something broke! Reason: ${err.message}`)
