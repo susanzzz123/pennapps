@@ -27252,6 +27252,17 @@ const Photo = ()=>{
     const [url, setURL] = (0, _react.useState)("");
     const [organ, setOrgan] = (0, _react.useState)("Select Plant Organ");
     const [identify, setIdentify] = (0, _react.useState)(false);
+    const [topResults, setTopResults] = (0, _react.useState)([]);
+    const radios = [
+        {
+            name: "Upload URL",
+            value: "1"
+        },
+        {
+            name: "Upload Local Image",
+            value: "2"
+        }
+    ];
     (0, _react.useEffect)(()=>{
         const uploadPictureButton = document.querySelector(".photo-upload");
         if (uploadPictureButton) uploadPictureButton.addEventListener("change", function() {
@@ -27277,10 +27288,13 @@ const Photo = ()=>{
         }
         .photo-url:hover {
             cursor:text;
+          }
+          .photo-display {
+            border-radius: 5px;
           }`
             }, void 0, false, {
                 fileName: "client/src/components/Photo.js",
-                lineNumber: 34,
+                lineNumber: 40,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
@@ -27288,7 +27302,7 @@ const Photo = ()=>{
                 children: "Welcome to Plantr!"
             }, void 0, false, {
                 fileName: "client/src/components/Photo.js",
-                lineNumber: 43,
+                lineNumber: 52,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h3", {
@@ -27296,7 +27310,7 @@ const Photo = ()=>{
                 children: "choose an image to get started!"
             }, void 0, false, {
                 fileName: "client/src/components/Photo.js",
-                lineNumber: 46,
+                lineNumber: 55,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Container), {
@@ -27306,33 +27320,33 @@ const Photo = ()=>{
                     children: [
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                             type: "radio",
-                            variant: "success",
+                            variant: mode === "url" ? "success" : "outline-success",
                             onClick: ()=>setMode("url"),
                             children: "Upload URL"
                         }, void 0, false, {
                             fileName: "client/src/components/Photo.js",
-                            lineNumber: 51,
+                            lineNumber: 60,
                             columnNumber: 13
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                             type: "radio",
-                            variant: "success",
+                            variant: mode === "url" ? "outline-success" : "success",
                             onClick: ()=>setMode("local"),
                             children: "Upload Local Image"
                         }, void 0, false, {
                             fileName: "client/src/components/Photo.js",
-                            lineNumber: 52,
+                            lineNumber: 61,
                             columnNumber: 13
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "client/src/components/Photo.js",
-                    lineNumber: 50,
+                    lineNumber: 59,
                     columnNumber: 9
                 }, undefined)
             }, void 0, false, {
                 fileName: "client/src/components/Photo.js",
-                lineNumber: 49,
+                lineNumber: 58,
                 columnNumber: 7
             }, undefined),
             mode === "local" && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
@@ -27348,7 +27362,7 @@ const Photo = ()=>{
                                 accept: ".png,.jpg,.jpeg,.raw,.eps,.gif,.tif,.tiff,.bmp"
                             }, void 0, false, {
                                 fileName: "client/src/components/Photo.js",
-                                lineNumber: 59,
+                                lineNumber: 68,
                                 columnNumber: 9
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Dropdown), {
@@ -27359,7 +27373,7 @@ const Photo = ()=>{
                                         children: organ
                                     }, void 0, false, {
                                         fileName: "client/src/components/Photo.js",
-                                        lineNumber: 66,
+                                        lineNumber: 75,
                                         columnNumber: 13
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Dropdown).Menu, {
@@ -27370,7 +27384,7 @@ const Photo = ()=>{
                                                 children: "Leaf"
                                             }, void 0, false, {
                                                 fileName: "client/src/components/Photo.js",
-                                                lineNumber: 70,
+                                                lineNumber: 79,
                                                 columnNumber: 17
                                             }, undefined),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Dropdown).Item, {
@@ -27379,7 +27393,7 @@ const Photo = ()=>{
                                                 children: "Flower"
                                             }, void 0, false, {
                                                 fileName: "client/src/components/Photo.js",
-                                                lineNumber: 71,
+                                                lineNumber: 80,
                                                 columnNumber: 17
                                             }, undefined),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Dropdown).Item, {
@@ -27388,7 +27402,7 @@ const Photo = ()=>{
                                                 children: "Fruit"
                                             }, void 0, false, {
                                                 fileName: "client/src/components/Photo.js",
-                                                lineNumber: 72,
+                                                lineNumber: 81,
                                                 columnNumber: 17
                                             }, undefined),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Dropdown).Item, {
@@ -27397,7 +27411,7 @@ const Photo = ()=>{
                                                 children: "Bark"
                                             }, void 0, false, {
                                                 fileName: "client/src/components/Photo.js",
-                                                lineNumber: 73,
+                                                lineNumber: 82,
                                                 columnNumber: 17
                                             }, undefined),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Dropdown).Item, {
@@ -27406,40 +27420,41 @@ const Photo = ()=>{
                                                 children: "Auto"
                                             }, void 0, false, {
                                                 fileName: "client/src/components/Photo.js",
-                                                lineNumber: 74,
+                                                lineNumber: 83,
                                                 columnNumber: 17
                                             }, undefined)
                                         ]
                                     }, void 0, true, {
                                         fileName: "client/src/components/Photo.js",
-                                        lineNumber: 69,
+                                        lineNumber: 78,
                                         columnNumber: 13
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "client/src/components/Photo.js",
-                                lineNumber: 65,
+                                lineNumber: 74,
                                 columnNumber: 11
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "client/src/components/Photo.js",
-                        lineNumber: 58,
+                        lineNumber: 67,
                         columnNumber: 7
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Container), {
                         className: "d-flex justify-content-center",
                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                            className: "photo-display",
                             id: "the-picture",
                             width: "30%"
                         }, void 0, false, {
                             fileName: "client/src/components/Photo.js",
-                            lineNumber: 79,
+                            lineNumber: 88,
                             columnNumber: 9
                         }, undefined)
                     }, void 0, false, {
                         fileName: "client/src/components/Photo.js",
-                        lineNumber: 78,
+                        lineNumber: 87,
                         columnNumber: 7
                     }, undefined)
                 ]
@@ -27461,23 +27476,27 @@ const Photo = ()=>{
                                         value: url
                                     }, void 0, false, {
                                         fileName: "client/src/components/Photo.js",
-                                        lineNumber: 89,
+                                        lineNumber: 98,
                                         columnNumber: 13
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                                         variant: "secondary",
                                         size: "sm",
-                                        onClick: ()=>setURL(""),
+                                        onClick: ()=>{
+                                            setURL("");
+                                            setOrgan("Select Plant Organ");
+                                            setIdentify(false);
+                                        },
                                         children: "clear"
                                     }, void 0, false, {
                                         fileName: "client/src/components/Photo.js",
-                                        lineNumber: 96,
+                                        lineNumber: 105,
                                         columnNumber: 13
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "client/src/components/Photo.js",
-                                lineNumber: 88,
+                                lineNumber: 97,
                                 columnNumber: 9
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Dropdown), {
@@ -27488,7 +27507,7 @@ const Photo = ()=>{
                                         children: organ
                                     }, void 0, false, {
                                         fileName: "client/src/components/Photo.js",
-                                        lineNumber: 101,
+                                        lineNumber: 114,
                                         columnNumber: 13
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Dropdown).Menu, {
@@ -27499,7 +27518,7 @@ const Photo = ()=>{
                                                 children: "leaf"
                                             }, void 0, false, {
                                                 fileName: "client/src/components/Photo.js",
-                                                lineNumber: 105,
+                                                lineNumber: 118,
                                                 columnNumber: 17
                                             }, undefined),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Dropdown).Item, {
@@ -27508,7 +27527,7 @@ const Photo = ()=>{
                                                 children: "flower"
                                             }, void 0, false, {
                                                 fileName: "client/src/components/Photo.js",
-                                                lineNumber: 106,
+                                                lineNumber: 119,
                                                 columnNumber: 17
                                             }, undefined),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Dropdown).Item, {
@@ -27517,7 +27536,7 @@ const Photo = ()=>{
                                                 children: "fruit"
                                             }, void 0, false, {
                                                 fileName: "client/src/components/Photo.js",
-                                                lineNumber: 107,
+                                                lineNumber: 120,
                                                 columnNumber: 17
                                             }, undefined),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Dropdown).Item, {
@@ -27526,7 +27545,7 @@ const Photo = ()=>{
                                                 children: "bark"
                                             }, void 0, false, {
                                                 fileName: "client/src/components/Photo.js",
-                                                lineNumber: 108,
+                                                lineNumber: 121,
                                                 columnNumber: 17
                                             }, undefined),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Dropdown).Item, {
@@ -27535,40 +27554,41 @@ const Photo = ()=>{
                                                 children: "auto"
                                             }, void 0, false, {
                                                 fileName: "client/src/components/Photo.js",
-                                                lineNumber: 109,
+                                                lineNumber: 122,
                                                 columnNumber: 17
                                             }, undefined)
                                         ]
                                     }, void 0, true, {
                                         fileName: "client/src/components/Photo.js",
-                                        lineNumber: 104,
+                                        lineNumber: 117,
                                         columnNumber: 13
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "client/src/components/Photo.js",
-                                lineNumber: 100,
+                                lineNumber: 113,
                                 columnNumber: 11
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "client/src/components/Photo.js",
-                        lineNumber: 87,
+                        lineNumber: 96,
                         columnNumber: 7
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Container), {
                         className: "d-flex justify-content-center",
                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                            className: "photo-display",
                             src: url,
                             width: "30%"
                         }, void 0, false, {
                             fileName: "client/src/components/Photo.js",
-                            lineNumber: 114,
+                            lineNumber: 127,
                             columnNumber: 9
                         }, undefined)
                     }, void 0, false, {
                         fileName: "client/src/components/Photo.js",
-                        lineNumber: 113,
+                        lineNumber: 126,
                         columnNumber: 7
                     }, undefined)
                 ]
@@ -27585,12 +27605,12 @@ const Photo = ()=>{
                     children: "Identify"
                 }, void 0, false, {
                     fileName: "client/src/components/Photo.js",
-                    lineNumber: 120,
+                    lineNumber: 133,
                     columnNumber: 9
                 }, undefined)
             }, void 0, false, {
                 fileName: "client/src/components/Photo.js",
-                lineNumber: 119,
+                lineNumber: 132,
                 columnNumber: 7
             }, undefined),
             identify && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _searchResult.SearchResult), {
@@ -27598,13 +27618,13 @@ const Photo = ()=>{
                 organ: organ
             }, void 0, false, {
                 fileName: "client/src/components/Photo.js",
-                lineNumber: 129,
+                lineNumber: 142,
                 columnNumber: 13
             }, undefined)
         ]
     }, void 0, true);
 };
-_s(Photo, "Q7IFazYQPt51XFk7P+2WhRt+1bs=");
+_s(Photo, "XRZfDIWEWB0d8rPKSgYf3OiVA3M=");
 _c = Photo;
 exports.default = Photo;
 var _c;
@@ -27615,7 +27635,7 @@ $RefreshReg$(_c, "Photo");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-bootstrap/ButtonGroup":"gXYCe","./SearchResult":"c7zJW"}],"3AD9A":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./SearchResult":"c7zJW","react-bootstrap/ButtonGroup":"gXYCe"}],"3AD9A":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Accordion", ()=>(0, _accordionDefault.default));
@@ -40928,36 +40948,141 @@ parcelHelpers.export(exports, "SearchResult", ()=>SearchResult);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
-var _card = require("react-bootstrap/Card");
-var _cardDefault = parcelHelpers.interopDefault(_card);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _moreInfo = require("./MoreInfo");
+var _card = require("react-bootstrap/Card");
+var _cardDefault = parcelHelpers.interopDefault(_card);
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _reactBootstrap = require("react-bootstrap");
+var _spinner = require("react-bootstrap/Spinner");
+var _spinnerDefault = parcelHelpers.interopDefault(_spinner);
 var _s = $RefreshSig$();
 const SearchResult = ({ image , organ  })=>{
     _s();
     const [topResults, setTopResults] = (0, _react.useState)([]);
+    const [modalShow, setModalShow] = (0, _react.useState)(false);
+    const [scientificName, setScientificName] = (0, _react.useState)("");
     (0, _react.useEffect)(()=>{
         const getPlantInfo = async ()=>{
+            const encodedImage = encodeURIComponent(image);
             try {
-                const { data  } = await (0, _axiosDefault.default).post("http://localhost:3001/remote/identifyPlant/:image/:organ");
-                setUser(data);
+                const { data  } = await (0, _axiosDefault.default).post(`http://localhost:3001/remote/identifyPlant/${encodedImage}/${organ}`);
+                const results = data.results;
+                const top = results.splice(0, 3);
+                setTopResults(top);
             } catch (e) {
-                setMsg("error while fetching logged in user");
+                console.log(e);
+                window.alert("error while fetching top search results");
             }
         };
         getPlantInfo();
     }, []);
+    const handleClickMoreInfo = (name)=>{
+        setModalShow(true);
+        setScientificName(name);
+    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-            children: "hi"
-        }, void 0, false, {
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Container), {
+            className: "d-flex",
+            children: [
+                topResults.length === 0 && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _spinnerDefault.default), {
+                    animation: "border",
+                    variant: "success"
+                }, void 0, false, {
+                    fileName: "client/src/components/SearchResult.js",
+                    lineNumber: 42,
+                    columnNumber: 21
+                }, undefined),
+                topResults && topResults.map((result)=>{
+                    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default), {
+                        style: {
+                            width: "18rem"
+                        },
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Img, {
+                                variant: "top",
+                                src: result.images[0].url.o
+                            }, void 0, false, {
+                                fileName: "client/src/components/SearchResult.js",
+                                lineNumber: 50,
+                                columnNumber: 29
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Body, {
+                                children: [
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Title, {
+                                        children: result.species.scientificNameWithoutAuthor
+                                    }, void 0, false, {
+                                        fileName: "client/src/components/SearchResult.js",
+                                        lineNumber: 52,
+                                        columnNumber: 33
+                                    }, undefined),
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Subtitle, {
+                                        className: "mb-2 text-muted",
+                                        children: [
+                                            "Similarity: ",
+                                            Math.round(result.score * 100),
+                                            "%"
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "client/src/components/SearchResult.js",
+                                        lineNumber: 53,
+                                        columnNumber: 33
+                                    }, undefined),
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Text, {
+                                        children: [
+                                            "Commonly known as ",
+                                            result.species.commonNames[0],
+                                            " or ",
+                                            result.species.commonNames[1],
+                                            "."
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "client/src/components/SearchResult.js",
+                                        lineNumber: 54,
+                                        columnNumber: 33
+                                    }, undefined),
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
+                                        variant: "secondary",
+                                        onClick: ()=>handleClickMoreInfo(result.species.scientificNameWithoutAuthor),
+                                        children: "View more"
+                                    }, void 0, false, {
+                                        fileName: "client/src/components/SearchResult.js",
+                                        lineNumber: 57,
+                                        columnNumber: 33
+                                    }, undefined)
+                                ]
+                            }, void 0, true, {
+                                fileName: "client/src/components/SearchResult.js",
+                                lineNumber: 51,
+                                columnNumber: 29
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "client/src/components/SearchResult.js",
+                        lineNumber: 49,
+                        columnNumber: 25
+                    }, undefined);
+                }),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _moreInfo.MoreInfo), {
+                    show: modalShow,
+                    scientificName: scientificName,
+                    setModalShow: setModalShow
+                }, void 0, false, {
+                    fileName: "client/src/components/SearchResult.js",
+                    lineNumber: 64,
+                    columnNumber: 17
+                }, undefined)
+            ]
+        }, void 0, true, {
             fileName: "client/src/components/SearchResult.js",
-            lineNumber: 22,
+            lineNumber: 39,
             columnNumber: 13
         }, undefined)
     }, void 0, false);
 };
-_s(SearchResult, "uZ1/tY9fPtoD4v8KdrMa76pw6Gs=");
+_s(SearchResult, "7IkB1NSGDVbO4TqrxzN6AMXeQyM=");
 _c = SearchResult;
 var _c;
 $RefreshReg$(_c, "SearchResult");
@@ -40967,7 +41092,7 @@ $RefreshReg$(_c, "SearchResult");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-bootstrap/Card":"lAynp","axios":"jo6P5","react/jsx-dev-runtime":"iTorj"}],"jo6P5":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-bootstrap/Card":"lAynp","react-bootstrap":"3AD9A","axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-bootstrap/Spinner":"2r8jr","react-bootstrap/Button":"aPzUt","./MoreInfo":"f6TSh"}],"jo6P5":[function(require,module,exports) {
 module.exports = require("./lib/axios");
 
 },{"./lib/axios":"63MyY"}],"63MyY":[function(require,module,exports) {
@@ -43982,6 +44107,96 @@ var utils = require("./../utils");
     return utils.isObject(payload) && payload.isAxiosError === true;
 };
 
-},{"./../utils":"5By4s"}]},["1xC6H","hF5Ae","iXgNX"], "iXgNX", "parcelRequired6fc")
+},{"./../utils":"5By4s"}],"f6TSh":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$9dc1 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$9dc1.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "MoreInfo", ()=>MoreInfo);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _modal = require("react-bootstrap/Modal");
+var _modalDefault = parcelHelpers.interopDefault(_modal);
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+const MoreInfo = ({ scientificName , setModalShow  })=>{
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _modalDefault.default), {
+        size: "lg",
+        "aria-labelledby": "contained-modal-title-vcenter",
+        centered: true,
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _modalDefault.default).Header, {
+                closeButton: true,
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _modalDefault.default).Title, {
+                    id: "contained-modal-title-vcenter",
+                    children: scientificName
+                }, void 0, false, {
+                    fileName: "client/src/components/MoreInfo.js",
+                    lineNumber: 13,
+                    columnNumber: 13
+                }, undefined)
+            }, void 0, false, {
+                fileName: "client/src/components/MoreInfo.js",
+                lineNumber: 12,
+                columnNumber: 11
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _modalDefault.default).Body, {
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
+                        children: "Centered Modal"
+                    }, void 0, false, {
+                        fileName: "client/src/components/MoreInfo.js",
+                        lineNumber: 18,
+                        columnNumber: 13
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                        children: "Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros."
+                    }, void 0, false, {
+                        fileName: "client/src/components/MoreInfo.js",
+                        lineNumber: 19,
+                        columnNumber: 13
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "client/src/components/MoreInfo.js",
+                lineNumber: 17,
+                columnNumber: 11
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _modalDefault.default).Footer, {
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
+                    onClick: ()=>setModalShow(false),
+                    children: "Close"
+                }, void 0, false, {
+                    fileName: "client/src/components/MoreInfo.js",
+                    lineNumber: 26,
+                    columnNumber: 13
+                }, undefined)
+            }, void 0, false, {
+                fileName: "client/src/components/MoreInfo.js",
+                lineNumber: 25,
+                columnNumber: 11
+            }, undefined)
+        ]
+    }, void 0, true, {
+        fileName: "client/src/components/MoreInfo.js",
+        lineNumber: 7,
+        columnNumber: 9
+    }, undefined);
+};
+_c = MoreInfo;
+var _c;
+$RefreshReg$(_c, "MoreInfo");
+
+  $parcel$ReactRefreshHelpers$9dc1.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-bootstrap/Modal":"aNVmp","react-bootstrap/Button":"aPzUt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["1xC6H","hF5Ae","iXgNX"], "iXgNX", "parcelRequired6fc")
 
 //# sourceMappingURL=index.2e933333.js.map

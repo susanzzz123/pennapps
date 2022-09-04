@@ -5,14 +5,12 @@ const app = express()
 const axios = require('axios')
 const fs = require('fs')
 const FormData = require('form-data');
+const cors = require('cors')
 
 app.use(express.json())
 app.use(express.static('dist'))
 
-// set favicon
-app.get('/favicon.ico', (req, res) => {
-  res.status(404).send()
-})
+app.use(cors())
 
 // app.use('/upload', upload)
 app.use((err, req, res, next) => {
@@ -57,10 +55,9 @@ app.post('/remote/identifyPlant/:image/:organ', async (req, res) => {
 
   image = encodeURIComponent(image)
 
-
-  axios.get(`https://my-api.plantnet.org/v2/identify/all?api-key=2b108jwkqQofJmQ1nbXABTe&images=${image}&organs=${organ}`
+  axios.get(`https://my-api.plantnet.org/v2/identify/all?api-key=2b108jwkqQofJmQ1nbXABTe&images=${image}&organs=${organ}&include-related-images=true&no-reject=false&lang=en`
   ).then((response) => {
-    console.log(response.data)
+    // console.log(response.data)
     res.send(response.data)
   }).catch(err => {
     res.send(err)
@@ -76,6 +73,11 @@ app.get('/wiki', async (req, res) => {
   } catch (e) {
     console.error(e);
   }
+})
+
+// set favicon
+app.get('/favicon.ico', (req, res) => {
+  res.status(404).send()
 })
 
 // set the initial entry point

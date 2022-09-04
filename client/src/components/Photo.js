@@ -8,6 +8,12 @@ const Photo = () => {
   const [url, setURL] = useState('')
   const [organ, setOrgan] = useState('Select Plant Organ')
   const [identify, setIdentify] = useState(false)
+  const [topResults, setTopResults] = useState([])
+
+  const radios = [
+    { name: 'Upload URL', value: '1' },
+    { name: 'Upload Local Image', value: '2' }
+  ];
 
   useEffect(() => {
     const uploadPictureButton = document.querySelector(".photo-upload")
@@ -38,6 +44,9 @@ const Photo = () => {
         }
         .photo-url:hover {
             cursor:text;
+          }
+          .photo-display {
+            border-radius: 5px;
           }`}
       </style>
       <h1 className="w-full text-center">
@@ -48,8 +57,8 @@ const Photo = () => {
       </h3>
       <Container className='d-flex justify-content-center'>
         <ButtonGroup aria-label="Basic example">
-            <Button type='radio' variant="success" onClick={() => setMode('url')}>Upload URL</Button>
-            <Button type='radio' variant="success" onClick={() => setMode('local')}>Upload Local Image</Button>
+            <Button type='radio' variant={mode === 'url' ? "success" : "outline-success"} onClick={() => setMode('url')}>Upload URL</Button>
+            <Button type='radio' variant={mode === 'url' ? "outline-success" : "success"} onClick={() => setMode('local')}>Upload Local Image</Button>
         </ButtonGroup>
       </Container>
       {
@@ -76,7 +85,7 @@ const Photo = () => {
           </Dropdown>
       </Container>
       <Container className="d-flex justify-content-center">
-        <img id="the-picture" width="30%"/>
+        <img className='photo-display' id="the-picture" width="30%"/>
       </Container>
             </>
         )
@@ -93,7 +102,11 @@ const Photo = () => {
             placeholder='Image URL:'
             onChange={e => setURL(e.target.value)}
             value={url}></input>
-            <Button variant='secondary' size='sm' onClick={() => setURL('')}>
+            <Button variant='secondary' size='sm' onClick={() => {
+                setURL('')
+                setOrgan('Select Plant Organ')
+                setIdentify(false)
+            }}>
                 clear
             </Button>
         </div>
@@ -111,7 +124,7 @@ const Photo = () => {
           </Dropdown>
       </Container>
       <Container className="d-flex justify-content-center">
-        <img src={url} width="30%"/>
+        <img className='photo-display' src={url} width="30%"/>
       </Container>
             </>
         )

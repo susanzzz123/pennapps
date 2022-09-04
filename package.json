@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel ./client/src/index.html"
+    "build": "parcel serve client/src/index.html",
+    "server": "node server/server.js",
+    "dev": "concurrently --kill-others \"npm run build\" \"npm run server\""
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,7 @@
     "concurrently": "^7.3.0",
     "cookie-parser": "^1.4.6",
     "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
     "eslint": "^8.23.0",
     "express": "^4.18.1",
     "mongoose": "^6.5.4",
