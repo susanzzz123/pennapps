@@ -14,6 +14,8 @@ export const MoreInfo = ({ commonName, scientificName, modalShow, setModalShow }
                 await axios.get(`http://localhost:3001/wiki?name=${commonName}`
                 ).then(response => {
                   const { sentiment, rawText } = response.data
+                  console.log(sentiment)
+                  console.log(rawText)
                   setSentiment(sentiment)
                   setText(rawText)
                 }).catch(err => {
@@ -56,8 +58,8 @@ export const MoreInfo = ({ commonName, scientificName, modalShow, setModalShow }
             </Modal.Header>
             <Modal.Body>
                 <div className='d-flex' style={{ color: 'white' }}>
-                    <Badge bg="success" pill>Sentiment score: {sentiment.score}</Badge>
-                    <Badge bg="success" pill>Sentiment magnitude: {sentiment.magnitude.toFixed(2)}</Badge>
+                    <Badge bg="success" pill>Sentiment score: {sentiment?.score}</Badge>
+                    <Badge bg="success" pill>Sentiment magnitude: {sentiment?.magnitude.toFixed(2)}</Badge>
                 </div>
                 <h4>Centered Modal</h4>
                 <p>

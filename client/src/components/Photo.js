@@ -81,6 +81,11 @@ const Photo = () => {
           }
           .photo-display {
             border-radius: 5px;
+          }
+          .required {
+            color: #CD5C5C;
+            font-weight: 700;
+            font-size: 2rem;
           }`}
       </style>
       <h1 className="w-full text-center">
@@ -95,6 +100,7 @@ const Photo = () => {
             onClick={() => {
                 setMode('url')
                 setURL('')
+                setIdentify(false)
             }}>
                 Upload URL
             </Button>
@@ -102,6 +108,7 @@ const Photo = () => {
             onClick={() => {
                 setMode('local')
                 setURL('')
+                setIdentify(false)
             }}>
                 Upload Local Image
             </Button>
@@ -119,7 +126,7 @@ const Photo = () => {
             <input
             role="button"
             id="myImage"
-            className="w-fit border border-5 place-self-center mx-auto photo-upload"
+            className="w-fit border border-5 place-self-center mx-1 photo-upload"
             type="file"
             accept=".png,.jpg,.jpeg"
             ref={inputRef}></input>
@@ -136,16 +143,17 @@ const Photo = () => {
                 clear
             </Button>
         </div>
+        <p className='required'>*</p>
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
                 {organ}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1" onClick={() => setOrgan('leaf')}>Leaf</Dropdown.Item>
-                <Dropdown.Item href="#/action-2" onClick={() => setOrgan('flower')}>Flower</Dropdown.Item>
-                <Dropdown.Item href="#/action-3" onClick={() => setOrgan('fruit')}>Fruit</Dropdown.Item>
-                <Dropdown.Item href="#/action-4" onClick={() => setOrgan('bark')}>Bark</Dropdown.Item>
-                <Dropdown.Item href="#/action-5" onClick={() => setOrgan('auto')}>Auto</Dropdown.Item>
+                <Dropdown.Item href="#/action-1" onClick={() => setOrgan('leaf')}>leaf</Dropdown.Item>
+                <Dropdown.Item href="#/action-2" onClick={() => setOrgan('flower')}>flower</Dropdown.Item>
+                <Dropdown.Item href="#/action-3" onClick={() => setOrgan('fruit')}>fruit</Dropdown.Item>
+                <Dropdown.Item href="#/action-4" onClick={() => setOrgan('bark')}>bark</Dropdown.Item>
+                <Dropdown.Item href="#/action-5" onClick={() => setOrgan('auto')}>auto</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
       </Container>
@@ -162,7 +170,7 @@ const Photo = () => {
         <div className='mr-5'>
             <input
             id="myImage"
-            className="w-fit border border-5 mx-auto photo-url"
+            className="w-fit border border-5 mx-1 photo-url"
             type="url"
             placeholder='Image URL:'
             onChange={e => setURL(e.target.value)}
@@ -178,6 +186,7 @@ const Photo = () => {
                 clear
             </Button>
         </div>
+        <p className='required'>*</p>
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
                 {organ}
@@ -201,13 +210,14 @@ const Photo = () => {
         <Button variant='success' 
         disabled={organ === 'Select Plant Organ'} 
         style={organ === 'Select Plant Organ' ? {cursor: 'not-allowed'} : {}}
-        onClick={() => setIdentify(true)}>
+        onClick={() => setIdentify(true)}
+        size="lg">
             Identify
         </Button>
       </Container>
       {
         identify && (
-            <SearchResult image={url} organ={organ} setModalShow={setModalShow} setCommonName={setCommonName} setScientificName={setScientificName}></SearchResult>
+            <SearchResult image={url} organ={organ} setModalShow={setModalShow} setScientificName={setScientificName} setCommonName={setCommonName}></SearchResult>
         )
       }
       {

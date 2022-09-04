@@ -37,7 +37,7 @@ export const SearchResult = ({ image, organ, setModalShow, setScientificName, se
       let i = 0
     return (
         <>
-            <Container className='d-flex'>
+            <Container className='d-flex justify-content-center'>
                 {
                     topResults.length === 0 && (
                     <Spinner animation="border" variant="success"></Spinner>
@@ -47,7 +47,7 @@ export const SearchResult = ({ image, organ, setModalShow, setScientificName, se
                     topResults && (
                         topResults.map(result => {
                             return(
-                        <Card style={{ width: '18rem' }} key={i++}>
+                        <Card className="mx-3" style={{ width: '18rem' }} key={i++}>
                             <Card.Img variant="top" src={result.images[0].url.o} />
                             <Card.Body>
                                 <Card.Title>{result.species.scientificNameWithoutAuthor}</Card.Title>

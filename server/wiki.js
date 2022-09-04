@@ -13,6 +13,7 @@ const cleanWikiText = async (rawContent) => {
 }
 
 const wikiSentiment = async (name) => {
+  console.log('hHELLOOOO')
   // check input
   if (name === null || name === undefined || name.length === 0) {
     throw new Error('Invalid Wiki Page');
@@ -39,6 +40,7 @@ const wikiSentiment = async (name) => {
   const [result] = await client.analyzeSentiment({ document })
 
   const sentiment = result.documentSentiment
+  console.log(sentiment)
   console.log('Document sentiment:')
   console.log(`  Score: ${sentiment.score}`)
   console.log(`  Magnitude: ${sentiment.magnitude}`)
