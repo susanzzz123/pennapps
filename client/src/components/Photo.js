@@ -1,7 +1,7 @@
 import { SearchResult } from './SearchResult';
 import { MoreInfo } from './MoreInfo';
 import { Container, Dropdown, Button } from 'react-bootstrap'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { RiPlantLine } from "react-icons/ri"
 import { initializeApp } from 'firebase/app'
@@ -22,8 +22,7 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig)
 const storage = getStorage()
-const storageRef = ref(storage, 'images/plant');
-
+const storageRef = ref(storage, 'images/plant')
 
 const Photo = () => {
   const [mode, setMode] = useState('url')
@@ -32,12 +31,6 @@ const Photo = () => {
   const [identify, setIdentify] = useState(false)
   const [modalShow, setModalShow] = useState(false)
   const [scientificName, setScientificName] = useState('')
-
-
-  const radios = [
-    { name: 'Upload URL', value: '1' },
-    { name: 'Upload Local Image', value: '2' }
-  ];
 
   useEffect(() => {
     const uploadPictureButton = document.querySelector(".photo-upload")
@@ -68,6 +61,12 @@ const Photo = () => {
     }
   })
 
+  const inputRef = useRef(null)
+
+    const resetFileInput = () => {
+        inputRef.current.value = null;
+    }
+
   return (
     <>
       <style type="text/css">
@@ -90,8 +89,20 @@ const Photo = () => {
       </h3>
       <Container className='d-flex justify-content-center'>
         <ButtonGroup aria-label="Basic example">
-            <Button type='radio' variant={mode === 'url' ? "success" : "outline-success"} onClick={() => setMode('url')}>Upload URL</Button>
-            <Button type='radio' variant={mode === 'url' ? "outline-success" : "success"} onClick={() => setMode('local')}>Upload Local Image</Button>
+            <Button type='radio' variant={mode === 'url' ? "success" : "outline-success"} 
+            onClick={() => {
+                setMode('url')
+                setURL('')
+            }}>
+                Upload URL
+            </Button>
+            <Button type='radio' variant={mode === 'url' ? "outline-success" : "success"}
+            onClick={() => {
+                setMode('local')
+                setURL('')
+            }}>
+                Upload Local Image
+            </Button>
         </ButtonGroup>
       </Container>
       <Container className='d-flex justify-content-center'>
@@ -101,13 +112,28 @@ const Photo = () => {
       {
         mode === 'local' && (
             <> 
-      <Container className="d-flex ">
-        <input
-          role="button"
-          id="myImage"
-          className="w-fit border border-5 place-self-center mx-auto photo-upload"
-          type="file"
-          accept=".png,.jpg,.jpeg"></input>
+      <Container className="d-flex justify-content-center mt-3">
+        <div className='mr-5'>
+            <input
+            role="button"
+            id="myImage"
+            className="w-fit border border-5 place-self-center mx-auto photo-upload"
+            type="file"
+            accept=".png,.jpg,.jpeg"
+            ref={inputRef}></input>
+            <Button variant='secondary' size='sm' 
+            onClick={() => {
+                setURL('')
+                setOrgan('Select Plant Organ')
+                setIdentify(false)
+                document.getElementById('the-picture').setAttribute('src', '')
+                resetFileInput()
+            }}
+            disabled={url === ''}
+            style={url === '' ? {cursor: 'not-allowed'} : {}}>
+                clear
+            </Button>
+        </div>
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
                 {organ}
@@ -139,11 +165,14 @@ const Photo = () => {
             placeholder='Image URL:'
             onChange={e => setURL(e.target.value)}
             value={url}></input>
-            <Button variant='secondary' size='sm' onClick={() => {
+            <Button variant='secondary' size='sm' 
+            onClick={() => {
                 setURL('')
                 setOrgan('Select Plant Organ')
                 setIdentify(false)
-            }}>
+            }}
+            disabled={url === ''}
+            style={url === '' ? {cursor: 'not-allowed'} : {}}>
                 clear
             </Button>
         </div>
