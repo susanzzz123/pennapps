@@ -1,14 +1,37 @@
 import { SearchResult } from './SearchResult';
+import { MoreInfo } from './MoreInfo';
 import { Container, Dropdown, Button } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import { initializeApp } from 'firebase/app'
+import { getStorage, ref, uploadString, getDownloadURL } from 'firebase/storage'
+import {
+  api_key, app_id, measurement_id, messaging_sender_id, storage_bucket,
+} from './config'
+
+const firebaseConfig = {
+  apiKey: api_key,
+  authDomain: 'jason-ren.firebaseapp.com',
+  projectId: 'jason-ren',
+  storageBucket: storage_bucket,
+  messagingSenderId: messaging_sender_id,
+  appId: app_id,
+  measurementId: measurement_id,
+}
+
+const firebaseApp = initializeApp(firebaseConfig)
+const storage = getStorage()
+const storageRef = ref(storage, 'images/plant');
+
 
 const Photo = () => {
   const [mode, setMode] = useState('url')
   const [url, setURL] = useState('')
   const [organ, setOrgan] = useState('Select Plant Organ')
   const [identify, setIdentify] = useState(false)
-  const [topResults, setTopResults] = useState([])
+  const [modalShow, setModalShow] = useState(false)
+  const [scientificName, setScientificName] = useState('')
+
 
   const radios = [
     { name: 'Upload URL', value: '1' },
@@ -23,12 +46,21 @@ const Photo = () => {
           });
     } 
 
-    const displayUploadPicture = (input) => {
+    const displayUploadPicture = async (input) => {
       if (input.files && input.files[0]) {
         var reader = new FileReader();
-        reader.onload = function (e) {
-          document.getElementById('the-picture').setAttribute('src', reader.result);
+        reader.onload = async (e) => {
+          document.getElementById('the-picture').setAttribute('src', e.target.result);
+          uploadString(storageRef, e.target.result, 'data_url').then((snapshot)=> {
+            console.log('data_url upload successful')
+          })
         };
+
+        await getDownloadURL(storageRef).then((url) => {
+            setURL(url)
+        }).catch((error) => {
+            console.log(error)
+        })
 
         reader.readAsDataURL(input.files[0]);
       }
@@ -61,6 +93,10 @@ const Photo = () => {
             <Button type='radio' variant={mode === 'url' ? "outline-success" : "success"} onClick={() => setMode('local')}>Upload Local Image</Button>
         </ButtonGroup>
       </Container>
+      <Container className='d-flex justify-content-center'>
+        <p className='text-muted'>*Acceptable file formats: .png, .jpg, .jpeg</p>
+      </Container>
+      
       {
         mode === 'local' && (
             <> 
@@ -70,7 +106,7 @@ const Photo = () => {
           id="myImage"
           className="w-fit border border-5 place-self-center mx-auto photo-upload"
           type="file"
-          accept=".png,.jpg,.jpeg,.raw,.eps,.gif,.tif,.tiff,.bmp"></input>
+          accept=".png,.jpg,.jpeg"></input>
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
                 {organ}
@@ -139,7 +175,12 @@ const Photo = () => {
       </Container>
       {
         identify && (
-            <SearchResult image={url} organ={organ}></SearchResult>
+            <SearchResult image={url} organ={organ} setModalShow={setModalShow} setScientificName={setScientificName}></SearchResult>
+        )
+      }
+      {
+        modalShow && (
+            <MoreInfo scientificName={scientificName} modalShow={modalShow} setModalShow={setModalShow}></MoreInfo>
         )
       }
     </>

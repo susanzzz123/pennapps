@@ -5,13 +5,12 @@ import { MoreInfo } from "./MoreInfo"
 import Card from 'react-bootstrap/Card'
 import Button from "react-bootstrap/Button"
 import { Container } from "react-bootstrap"
-import Spinner from 'react-bootstrap/Spinner';
+import Spinner from 'react-bootstrap/Spinner'
+import ProgressBar from 'react-bootstrap/ProgressBar'
 
 
-export const SearchResult = ({ image, organ }) => {
+export const SearchResult = ({ image, organ, setModalShow, setScientificName }) => {
     const [topResults, setTopResults] = useState([])
-    const [modalShow, setModalShow] = useState(false)
-    const [scientificName, setScientificName] = useState('')
 
     useEffect(() => {
         const getPlantInfo = async () => {
@@ -51,17 +50,32 @@ export const SearchResult = ({ image, organ }) => {
                             <Card.Body>
                                 <Card.Title>{result.species.scientificNameWithoutAuthor}</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">Similarity: {(Math.round(result.score * 100))}%</Card.Subtitle>
-                                <Card.Text>
-                                Commonly known as {result.species.commonNames[0]} or {result.species.commonNames[1]}.
-                                </Card.Text>
-                                <Button variant="secondary" onClick={() => handleClickMoreInfo(result.species.scientificNameWithoutAuthor)}>View more</Button>
+                                <ProgressBar now={(Math.round(result.score * 100))} variant='success'></ProgressBar>
+                                {
+                                    (result.species.commonNames[1] === undefined || result.species.commonNames[1] === '') && 
+                                    (
+                                        <Card.Text>
+                                        Commonly known as {result.species.commonNames[0]}.
+                                        </Card.Text>
+                                    )
+                                }
+                                {
+                                    (result.species.commonNames[1] !== undefined && result.species.commonNames[1] !== '') && 
+                                    (
+                                        <Card.Text>
+                                        Commonly known as {result.species.commonNames[0]} or {result.species.commonNames[1]}.
+                                        </Card.Text>
+                                     )
+                                }
+                                <Button variant="secondary" onClick={() => handleClickMoreInfo(result.species.scientificNameWithoutAuthor)}>
+                                    View more
+                                </Button>
                             </Card.Body>
                         </Card>
                             )
                         })
                     )
                 }
-                <MoreInfo show={modalShow} scientificName={scientificName} setModalShow={setModalShow}></MoreInfo>
             </Container>
         </>
     )
