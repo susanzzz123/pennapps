@@ -58,9 +58,10 @@ export const MoreInfo = ({ commonName, scientificName, modalShow, setModalShow }
             </Modal.Header>
             <Modal.Body>
                 <div className='d-flex' style={{ color: 'white' }}>
-                    <Badge bg="success" pill>Sentiment score: {sentiment?.score}</Badge>
+                    <Badge className='mr-1' bg="success" pill>Sentiment score: {sentiment?.score}</Badge>
                     <Badge bg="success" pill>Sentiment magnitude: {sentiment?.magnitude.toFixed(2)}</Badge>
                 </div>
+                <p className='text-muted'>Neutral sentiment score: 0.0 *Truly neutral documents will have a low magnitude value, while mixed documents will have higher magnitude values (Google Cloud Natural Langauge API)</p>
                 <h4>Centered Modal</h4>
                 <p>
                 Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
@@ -69,7 +70,7 @@ export const MoreInfo = ({ commonName, scientificName, modalShow, setModalShow }
                 </p>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={() => setModalShow(false)}>Close</Button>
+                <Button variant='success' onClick={() => setModalShow(false)}>Close</Button>
             </Modal.Footer>
             </Modal>
         </>

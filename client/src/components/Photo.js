@@ -86,14 +86,22 @@ const Photo = () => {
             color: #CD5C5C;
             font-weight: 700;
             font-size: 2rem;
+          }
+          .plant-icon {
+            color: green;
+            font-weight: 1000;
+            font-size: 3rem;
           }`}
       </style>
-      <h1 className="w-full text-center">
-        Welcome to Plantr!
-      </h1>
-      <h3 className="w-full text-center">
-        choose an image to get started!
-      </h3>
+      <Container className='d-flex justify-content-center mt-5'>
+        <h1 className="w-full">
+            Welcome to Plantr!
+        </h1>
+        <RiPlantLine className='plant-icon'></RiPlantLine>
+      </Container>
+      <h4 className="w-full text-center mt-5">
+        Upload an image to get started!
+      </h4>
       <Container className='d-flex justify-content-center'>
         <ButtonGroup aria-label="Basic example">
             <Button type='radio' variant={mode === 'url' ? "success" : "outline-success"} 
@@ -101,6 +109,7 @@ const Photo = () => {
                 setMode('url')
                 setURL('')
                 setIdentify(false)
+                setOrgan('Select Plant Organ')
             }}>
                 Upload URL
             </Button>
@@ -109,6 +118,7 @@ const Photo = () => {
                 setMode('local')
                 setURL('')
                 setIdentify(false)
+                setOrgan('Select Plant Organ')
             }}>
                 Upload Local Image
             </Button>
@@ -121,7 +131,7 @@ const Photo = () => {
       {
         mode === 'local' && (
             <> 
-      <Container className="d-flex justify-content-center mt-3">
+      <Container className="d-flex justify-content-center mt-4">
         <div className='mr-5'>
             <input
             role="button"
@@ -166,7 +176,7 @@ const Photo = () => {
       {
         mode === 'url' && (
         <> 
-      <Container className="d-flex justify-content-center mt-3">
+      <Container className="d-flex justify-content-center mt-4">
         <div className='mr-5'>
             <input
             id="myImage"
@@ -206,7 +216,7 @@ const Photo = () => {
             </>
         )
       }
-      <Container className="d-flex justify-content-center">
+      <Container className="d-flex justify-content-center mt-4">
         <Button variant='success' 
         disabled={organ === 'Select Plant Organ'} 
         style={organ === 'Select Plant Organ' ? {cursor: 'not-allowed'} : {}}

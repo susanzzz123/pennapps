@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react"
 import axios from 'axios'
-import { MoreInfo } from "./MoreInfo"
 
 import Card from 'react-bootstrap/Card'
 import Button from "react-bootstrap/Button"
@@ -37,7 +36,7 @@ export const SearchResult = ({ image, organ, setModalShow, setScientificName, se
       let i = 0
     return (
         <>
-            <Container className='d-flex justify-content-center'>
+            <Container className='d-flex justify-content-center mt-4'>
                 {
                     topResults.length === 0 && (
                     <Spinner animation="border" variant="success"></Spinner>
