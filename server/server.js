@@ -6,6 +6,7 @@ const axios = require('axios')
 const fs = require('fs')
 const FormData = require('form-data');
 const cors = require('cors')
+const {wikiSentiment} = require('./wiki')
 
 app.use(express.json())
 app.use(express.static('dist'))
@@ -23,28 +24,20 @@ app.post('/local/identifyFlower/:image', async (req, res) => {
   // image must be a string path
   const { image } = params
 
-  console.log('hello')
-  res.send('hi')
-
   let form = new FormData();
 
   form.append('organs', 'leaf');
   form.append('images', fs.createReadStream(image));
 
-  try {
-    const { status, data } = await axios.post(
-      'https://my-api.plantnet.org/v2/identify/all?api-key=2b108jwkqQofJmQ1nbXABTe',
-      form, {
-      headers: form.getHeaders()
-    }
-    );
-
-    console.log('status', status); // should be: 200
-    console.log('data', require('util').inspect(data, false, null, true)); // should be: read "Step 6" below
-    res.send(data)
-  } catch (error) {
-    console.error('error', error);
-  }
+  axios.post('https://my-api.plantnet.org/v2/identify/all?api-key=2b108jwkqQofJmQ1nbXABTe', form, {
+    headers: form.getHeaders()
+  }).then(response => {
+    console.log(response.data)
+    res.send(response.data)
+  }).catch(err => {
+    console.log(err)
+    res.send(err)
+  })
 })
 
 app.post('/remote/identifyPlant/:image/:organ', async (req, res) => {
@@ -57,7 +50,6 @@ app.post('/remote/identifyPlant/:image/:organ', async (req, res) => {
 
   axios.get(`https://my-api.plantnet.org/v2/identify/all?api-key=2b108jwkqQofJmQ1nbXABTe&images=${image}&organs=${organ}&include-related-images=true&no-reject=false&lang=en`
   ).then((response) => {
-    // console.log(response.data)
     res.send(response.data)
   }).catch(err => {
     res.send(err)
@@ -67,9 +59,9 @@ app.post('/remote/identifyPlant/:image/:organ', async (req, res) => {
 // set the initial entry point
 app.get('/wiki', async (req, res) => {
   try {
-    const sentiment = await wikiSentiment(req.query.name);
+    const { sentiment, rawText } = await wikiSentiment(req.query.name);
     console.log(sentiment);
-    return res.json({ sentiment: sentiment });
+    return res.json({ sentiment, rawText });
   } catch (e) {
     console.error(e);
   }
