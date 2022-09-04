@@ -9,7 +9,7 @@ import Spinner from 'react-bootstrap/Spinner'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 
 
-export const SearchResult = ({ image, organ, setModalShow, setScientificName }) => {
+export const SearchResult = ({ image, organ, setModalShow, setScientificName, setCommonName }) => {
     const [topResults, setTopResults] = useState([])
 
     useEffect(() => {
@@ -28,11 +28,13 @@ export const SearchResult = ({ image, organ, setModalShow, setScientificName }) 
         getPlantInfo()
       }, [])
 
-      const handleClickMoreInfo = (name) => {
+      const handleClickMoreInfo = (name, commonName) => {
         setModalShow(true)
         setScientificName(name)
+        setCommonName(commonName)
       }
 
+      let i = 0
     return (
         <>
             <Container className='d-flex'>
@@ -45,7 +47,7 @@ export const SearchResult = ({ image, organ, setModalShow, setScientificName }) 
                     topResults && (
                         topResults.map(result => {
                             return(
-                        <Card style={{ width: '18rem' }}>
+                        <Card style={{ width: '18rem' }} key={i++}>
                             <Card.Img variant="top" src={result.images[0].url.o} />
                             <Card.Body>
                                 <Card.Title>{result.species.scientificNameWithoutAuthor}</Card.Title>
@@ -67,7 +69,7 @@ export const SearchResult = ({ image, organ, setModalShow, setScientificName }) 
                                         </Card.Text>
                                      )
                                 }
-                                <Button variant="secondary" onClick={() => handleClickMoreInfo(result.species.scientificNameWithoutAuthor)}>
+                                <Button variant="secondary" onClick={() => handleClickMoreInfo(result.species.scientificNameWithoutAuthor, result.species.commonNames[0])}>
                                     View more
                                 </Button>
                             </Card.Body>

@@ -22,28 +22,28 @@ const wikiSentiment = async (name) => {
   const rawText = await getWikiText(name);
   // const cleanedText = await cleanWikiText(rawText);
   console.log('got text');
-  console.log(typeof rawText)
+  console.log(rawText)
 
   // sentiment analysis
   const language = require('@google-cloud/language');
   const client = new language.LanguageServiceClient({
     projectId: 'sealapps22',
     keyFilename: '../../../Downloads/sealapps22-3e7d3dc43ddb.json'
-  });
+  })
 
   const document = {
     content: rawText,
     type: 'PLAIN_TEXT',
-  };
+  }
 
-  const [result] = await client.analyzeSentiment({ document });
+  const [result] = await client.analyzeSentiment({ document })
 
-  const sentiment = result.documentSentiment;
-  console.log('Document sentiment:');
-  console.log(`  Score: ${sentiment.score}`);
-  console.log(`  Magnitude: ${sentiment.magnitude}`);
+  const sentiment = result.documentSentiment
+  console.log('Document sentiment:')
+  console.log(`  Score: ${sentiment.score}`)
+  console.log(`  Magnitude: ${sentiment.magnitude}`)
 
-  return { sentiment, rawText };
+  return { sentiment, rawText }
 }
 
 module.exports = {

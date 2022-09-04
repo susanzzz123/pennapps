@@ -6,7 +6,7 @@ const axios = require('axios')
 const fs = require('fs')
 const FormData = require('form-data');
 const cors = require('cors')
-const {wikiSentiment} = require('./wiki')
+const { wikiSentiment } = require('./wiki')
 
 app.use(express.json())
 app.use(express.static('dist'))
@@ -32,7 +32,6 @@ app.post('/local/identifyFlower/:image', async (req, res) => {
   axios.post('https://my-api.plantnet.org/v2/identify/all?api-key=2b108jwkqQofJmQ1nbXABTe', form, {
     headers: form.getHeaders()
   }).then(response => {
-    console.log(response.data)
     res.send(response.data)
   }).catch(err => {
     console.log(err)

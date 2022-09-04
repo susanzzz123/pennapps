@@ -31,6 +31,8 @@ const Photo = () => {
   const [identify, setIdentify] = useState(false)
   const [modalShow, setModalShow] = useState(false)
   const [scientificName, setScientificName] = useState('')
+  const [commonName, setCommonName] = useState('')
+
 
   useEffect(() => {
     const uploadPictureButton = document.querySelector(".photo-upload")
@@ -205,12 +207,12 @@ const Photo = () => {
       </Container>
       {
         identify && (
-            <SearchResult image={url} organ={organ} setModalShow={setModalShow} setScientificName={setScientificName}></SearchResult>
+            <SearchResult image={url} organ={organ} setModalShow={setModalShow} setCommonName={setCommonName} setScientificName={setScientificName}></SearchResult>
         )
       }
       {
         modalShow && (
-            <MoreInfo scientificName={scientificName} modalShow={modalShow} setModalShow={setModalShow}></MoreInfo>
+            <MoreInfo commonName={commonName} scientificName={scientificName} modalShow={modalShow} setModalShow={setModalShow}></MoreInfo>
         )
       }
     </>

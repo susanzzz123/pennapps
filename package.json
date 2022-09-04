@@ -23,6 +23,8 @@
     "eslint": "^8.23.0",
     "express": "^4.18.1",
     "firebase": "^9.9.4",
+    "form-data": "^4.0.0",
+    "fs": "^0.0.1-security",
     "mongoose": "^6.5.4",
     "node": "^16.17.0",
     "parcel": "^2.7.0",
@@ -33,7 +35,8 @@
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
     "sass": "^1.52.1",
-    "tw-elements": "^1.0.0-alpha12"
+    "tw-elements": "^1.0.0-alpha12",
+    "wikijs": "^6.3.3"
   },
   "devDependencies": {
     "process": "^0.11.10"

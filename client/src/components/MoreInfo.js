@@ -1,10 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import Badge from 'react-bootstrap/Badge'
 import { VscChromeClose } from "react-icons/vsc"
 
-export const MoreInfo = ({ scientificName, modalShow, setModalShow }) => {
+export const MoreInfo = ({ commonName, scientificName, modalShow, setModalShow }) => {
+    const [sentiment, setSentiment] = useState()
+    const [text, setText] = useState()
+    useEffect(() => {
+        const getPlantSentiment = async () => {
+            if (commonName && modalShow) {
+                await axios.get(`http://localhost:3001/wiki?name=${commonName}`
+                ).then(response => {
+                  const { sentiment, rawText } = response.data
+                  setSentiment(sentiment)
+                  setText(rawText)
+                }).catch(err => {
+                  console.log(err)
+                })
+            }
+        }
+        getPlantSentiment()
+      }, [])
 
     return (
         <>
@@ -37,6 +55,10 @@ export const MoreInfo = ({ scientificName, modalShow, setModalShow }) => {
                 onClick={() => setModalShow(false)}></VscChromeClose>
             </Modal.Header>
             <Modal.Body>
+                <div className='d-flex' style={{ color: 'white' }}>
+                    <Badge bg="success" pill>Sentiment score: {sentiment.score}</Badge>
+                    <Badge bg="success" pill>Sentiment magnitude: {sentiment.magnitude.toFixed(2)}</Badge>
+                </div>
                 <h4>Centered Modal</h4>
                 <p>
                 Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
