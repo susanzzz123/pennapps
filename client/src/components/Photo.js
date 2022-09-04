@@ -3,6 +3,7 @@ import { MoreInfo } from './MoreInfo';
 import { Container, Dropdown, Button } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import { RiPlantLine } from "react-icons/ri"
 import { initializeApp } from 'firebase/app'
 import { getStorage, ref, uploadString, getDownloadURL } from 'firebase/storage'
 import {
