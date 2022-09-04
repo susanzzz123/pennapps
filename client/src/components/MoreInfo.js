@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
+import axios from 'axios'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import { VscChromeClose } from "react-icons/vsc"
 
 export const MoreInfo = ({ scientificName, modalShow, setModalShow }) => {
+
     return (
         <>
             <style type="text/css">
