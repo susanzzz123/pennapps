@@ -14,8 +14,6 @@ export const MoreInfo = ({ commonName, scientificName, modalShow, setModalShow }
                 await axios.get(`http://localhost:3001/wiki?name=${commonName}`
                 ).then(response => {
                   const { sentiment, rawText } = response.data
-                  console.log(sentiment)
-                  console.log(rawText)
                   setSentiment(sentiment)
                   setText(rawText)
                 }).catch(err => {

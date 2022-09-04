@@ -36,7 +36,7 @@ export const SearchResult = ({ image, organ, setModalShow, setScientificName, se
       let i = 0
     return (
         <>
-            <Container className='d-flex justify-content-center mt-4'>
+            <Container className='d-flex justify-content-center mt-4 mb-5'>
                 {
                     topResults.length === 0 && (
                     <Spinner animation="border" variant="success"></Spinner>
